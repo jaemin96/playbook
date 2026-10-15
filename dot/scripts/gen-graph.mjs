@@ -132,13 +132,13 @@ function nodeAttrs(pkgName, task) {
   const label = task ? `${pkgName}\\n· ${task}` : pkgName;
 
   if (kind === "app") {
-    return `label=${q(label)}, shape=ellipse, fillcolor="#0f4c81", fontcolor="white", color="#1e7fc4", penwidth=2`;
+    return `label=${q(label)}, shape=ellipse, style=filled, fillcolor="#1565c0", fontcolor="white", color="#64b5f6", penwidth=2.5`;
   }
   if (kind === "package") {
-    return `label=${q(label)}, shape=box, style="filled,rounded", fillcolor="#1e2d3d", fontcolor="white", color="#3a7bd5", penwidth=2`;
+    return `label=${q(label)}, shape=box, style="filled,rounded", fillcolor="#1b5e20", fontcolor="white", color="#66bb6a", penwidth=2.5`;
   }
   // 알 수 없는 노드 (root 등)
-  return `label=${q(label)}, shape=diamond, fillcolor="#007acc", fontcolor="white", color="#005fa3", penwidth=3`;
+  return `label=${q(label)}, shape=diamond, style=filled, fillcolor="#e65100", fontcolor="white", color="#ffb74d", penwidth=3`;
 }
 
 // ─── 7. 클러스터별 노드 분류 ─────────────────────────────────────────────────
@@ -157,16 +157,18 @@ for (const rawNode of turboNodeRaws) {
   else otherNodes.push({ id, attrs });
 }
 
-// workspace 의존성에만 나오는 노드 추가 (turbo 그래프에 없는 경우 대비)
-const turboNodeIds = new Set(
-  [...turboNodeRaws].map((r) => {
-    const { pkg, task } = parseNode(r);
-    return nodeId(pkg, task);
-  }),
-);
+// 패키지명 → turbo 노드 ID 맵 (workspace 엣지 ID 통일에 사용)
+const pkgToTurboId = new Map();
+for (const r of turboNodeRaws) {
+  const { pkg, task } = parseNode(r);
+  pkgToTurboId.set(pkg, nodeId(pkg, task));
+}
+
+// allPkgs 기반으로 누락 노드 보완 — turbo 엣지에 없어도 워크스페이스에 존재하면 포함
+const seenPkgNames = new Set([...turboNodeRaws].map((r) => parseNode(r).pkg));
 for (const pkg of allPkgs) {
-  const id = nodeId(pkg.name, null);
-  if (!turboNodeIds.has(id) && !turboNodeIds.has(`${pkg.name}#build`)) {
+  if (!seenPkgNames.has(pkg.name)) {
+    const id = nodeId(pkg.name, null);
     const attrs = nodeAttrs(pkg.name, null);
     if (pkg.kind === "app") appNodes.push({ id, attrs });
     else pkgNodes.push({ id, attrs });
@@ -185,13 +187,19 @@ const allEdges = [
   ...turboEdges
     .filter((e) => !e.from.includes("___ROOT___") && !e.to.includes("___ROOT___"))
     .map((e) => ({ ...convertEdge(e.from, e.to), style: "task" })),
-  // workspace 의존성 엣지
-  ...workspaceEdges.map((e) => ({ from: nodeId(e.from, null), to: nodeId(e.to, null), style: "dep" })),
+  // workspace 의존성 엣지 — turbo 노드 ID로 맞춤 (클러스터 밖 유령 노드 방지)
+  ...workspaceEdges.map((e) => ({
+    from: pkgToTurboId.get(e.from) ?? e.from,
+    to: pkgToTurboId.get(e.to) ?? e.to,
+    style: "dep",
+  })),
 ];
 
-// 중복 제거
+// 중복 제거 — 같은 노드 쌍에 dep + task 둘 다 있으면 dep(실선)만 유지
+const depPairs = new Set(allEdges.filter((e) => e.style === "dep").map((e) => `${e.from}→${e.to}`));
 const edgeSet = new Set();
 const uniqueEdges = allEdges.filter((e) => {
+  if (e.style === "task" && depPairs.has(`${e.from}→${e.to}`)) return false;
   const key = `${e.from}→${e.to}:${e.style}`;
   if (edgeSet.has(key)) return false;
   edgeSet.add(key);
@@ -214,7 +222,7 @@ function renderNodes(nodes) {
 function renderEdge(e) {
   if (e.style === "dep") {
     // workspace 의존 — 굵고 밝은 엣지
-    return `    ${q(e.from)} -> ${q(e.to)} [color="#3a7bd5cc", penwidth=2.5, style=solid, arrowsize=1.0];`;
+    return `    ${q(e.from)} -> ${q(e.to)} [color="#88888866", penwidth=1.5, style=solid, arrowsize=0.9];`;
   }
   // turbo task 엣지 — 가늘고 흐리게
   return `    ${q(e.from)} -> ${q(e.to)} [color="#ffffff40", penwidth=1.2, style=dashed, arrowsize=0.8];`;
@@ -246,31 +254,44 @@ digraph ${q(repoName)} {
         fontsize=9,
     ];
 
+${
+  appNodes.length > 0
+    ? `\
     // ── apps cluster ─────────────────────────────────────────────
     subgraph cluster_apps {
         label="apps";
         style="filled,rounded";
-        fillcolor="#0f1f33";
-        color="#1e4a7a";
-        fontcolor="#58a6ff";
+        fillcolor="#0a1929";
+        color="#1565c0";
+        fontcolor="white";
         fontsize=13;
+        fontname="monospace bold";
         penwidth=1.5;
         margin=20;
 ${renderNodes(appNodes)}
     }
-
+`
+    : ""
+}
+${
+  pkgNodes.length > 0
+    ? `\
     // ── packages cluster ─────────────────────────────────────────
     subgraph cluster_packages {
         label="packages";
         style="filled,rounded";
-        fillcolor="#111d2b";
-        color="#1a3a5c";
-        fontcolor="#79c0ff";
+        fillcolor="#0a1f0a";
+        color="#1b5e20";
+        fontcolor="white";
         fontsize=13;
+        fontname="monospace bold";
         penwidth=1.5;
         margin=20;
 ${renderNodes(pkgNodes)}
     }
+`
+    : ""
+}
 
 ${otherNodes.length > 0 ? `    // ── other ──────────────────────────────────────────────────\n${renderNodes(otherNodes)}\n` : ""}
     // ── edges ────────────────────────────────────────────────────
