@@ -2,7 +2,9 @@ import { colorFor } from "./core/color.js";
 import { createFlow, type Flow } from "./core/flow.js";
 import { isEnabled } from "./core/namespace.js";
 
-const isProd = typeof process !== "undefined" && process.env?.NODE_ENV === "production";
+// Vite injects import.meta.env.PROD at build time; fall back to false in test/SSR
+const isProd: boolean =
+  typeof import.meta !== "undefined" && (import.meta as { env?: { PROD?: boolean } }).env?.PROD === true;
 const noop = (): void => undefined;
 
 export interface Logger {
