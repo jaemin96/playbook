@@ -16,7 +16,7 @@
     "graph:merge": "node dot/scripts/merge-graph.js",
     "graph": "pnpm run graph:turbo && pnpm run graph:merge",
     "prepare": "lefthook install",
-    "setup:github": "bash scripts/setup-github.sh"
+    "setup:github": "node scripts/setup-github.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
