@@ -1,0 +1,12 @@
+node_modules
+dist
+.turbo/
+
+# dot 
+dot/raw
+dot/final
+
+# local only
+.env*
+.claude/settings.local.json
+lefthook-local.yml

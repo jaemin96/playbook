@@ -1,0 +1,21 @@
+# Git hook (lefthook)
+# pre-commit: staged 파일만 biome 으로 lint + format + import 정리, 고친 결과는 다시 stage
+# pre-push  : main 대비 바뀐 패키지(와 그걸 쓰는 패키지)만 typecheck + test
+
+pre-commit:
+  commands:
+    biome:
+      glob: "*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css}"
+      run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    verify:
+      # 첫 push 처럼 origin/main 이 아직 없으면 전체 실행
+      run: |
+        if git rev-parse --verify -q origin/main >/dev/null; then
+          pnpm turbo run typecheck test --filter='...[origin/main]' --output-logs=errors-only
+        else
+          pnpm turbo run typecheck test --output-logs=errors-only
+        fi

@@ -1,0 +1,28 @@
+{
+  "name": "mono",
+  "private": true,
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "graph:turbo": "node dot/scripts/gen-turbo-graph.js",
+    "graph:merge": "node dot/scripts/merge-graph.js",
+    "graph": "pnpm run graph:turbo && pnpm run graph:merge",
+    "prepare": "lefthook install",
+    "setup:github": "bash scripts/setup-github.sh"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/node": "catalog:",
+    "lefthook": "2.1.15",
+    "turbo": "latest",
+    "typescript": "catalog:"
+  }
+}
