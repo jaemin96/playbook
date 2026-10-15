@@ -15,6 +15,9 @@ catalog:
   "@types/node": ^24.10.1
   "@types/react": ^19.2.0
   "@types/react-dom": ^19.2.0
+  vitest: ^3.2.4
+  "@vitest/coverage-v8": ^3.2.4
+  jsdom: ^26.1.0
 
 # lefthook 의 postinstall 은 쓰지 않고 루트 prepare 스크립트로 hook 을 설치합니다.
 ignoredBuiltDependencies:
