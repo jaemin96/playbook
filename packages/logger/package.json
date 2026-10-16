@@ -20,6 +20,7 @@
     }
   },
   "devDependencies": {
+    "@repo/tsconfig": "workspace:*",
     "react": "catalog:",
     "@types/react": "catalog:",
     "typescript": "catalog:",

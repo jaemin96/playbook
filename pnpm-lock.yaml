@@ -53,6 +53,9 @@ importers:
 
   packages/logger:
     devDependencies:
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0
@@ -68,6 +71,8 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 3.2.7(@types/node@24.19.2)(jsdom@26.1.0)
+
+  packages/tsconfig: {}
 
 packages:
 
