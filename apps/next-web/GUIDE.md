@@ -3,44 +3,44 @@
 ## 학습 순서
 
 ### 1단계 — App Router 기초
-- `app/layout.tsx` / `app/page.tsx` 구조 이해
-- Server Component vs Client Component (`"use client"` 경계)
-- `app/loading.tsx`, `app/error.tsx`, `app/not-found.tsx` 특수 파일
-- 동적 라우팅: `app/posts/[id]/page.tsx`
-- 중첩 레이아웃: `app/dashboard/layout.tsx`
+- [ ] `app/layout.tsx` / `app/page.tsx` 구조 이해
+- [ ] Server Component vs Client Component (`"use client"` 경계)
+- [ ] `app/loading.tsx`, `app/error.tsx`, `app/not-found.tsx` 특수 파일
+- [ ] 동적 라우팅: `app/posts/[id]/page.tsx`
+- [ ] 중첩 레이아웃: `app/dashboard/layout.tsx`
 
 ### 2단계 — 데이터 패칭
-- Server Component에서 직접 `fetch()` (no useEffect)
-- `cache: 'force-cache'` / `revalidate` / `no-store` 옵션
-- `generateStaticParams` — 정적 페이지 사전 생성
-- Suspense + 스트리밍 렌더링
+- [ ] Server Component에서 직접 `fetch()` (no useEffect)
+- [ ] `cache: 'force-cache'` / `revalidate` / `no-store` 옵션
+- [ ] `generateStaticParams` — 정적 페이지 사전 생성
+- [ ] Suspense + 스트리밍 렌더링
 
 ### 3단계 — 서버 액션
-- `"use server"` 로 서버에서 실행되는 함수 정의
-- 폼 제출 처리 (`<form action={serverAction}>`)
-- `useActionState` / `useFormStatus` 훅
-- Optimistic UI 패턴
+- [ ] `"use server"` 로 서버에서 실행되는 함수 정의
+- [ ] 폼 제출 처리 (`<form action={serverAction}>`)
+- [ ] `useActionState` / `useFormStatus` 훅
+- [ ] Optimistic UI 패턴
 
 ### 4단계 — 클라이언트 상태 + API 연동
-- TanStack Query로 클라이언트 사이드 캐싱
-- Zustand 전역 상태 (Server Component와 경계 명확히)
-- Route Handlers (`app/api/*/route.ts`)
+- [ ] TanStack Query로 클라이언트 사이드 캐싱
+- [ ] Zustand 전역 상태 (Server Component와 경계 명확히)
+- [ ] Route Handlers (`app/api/*/route.ts`)
 
 ### 5단계 — 폼 & 검증
-- React Hook Form + Zod 조합
-- Server Action에서 Zod 검증
-- 에러 핸들링 패턴
+- [ ] React Hook Form + Zod 조합
+- [ ] Server Action에서 Zod 검증
+- [ ] 에러 핸들링 패턴
 
 ### 6단계 — UI
-- shadcn/ui 컴포넌트 추가 (`pnpm dlx shadcn@latest add button`)
-- Tailwind CSS v4 (CSS-first 설정 방식)
-- 다크모드 (`next-themes`)
+- [ ] shadcn/ui 컴포넌트 추가 (`pnpm dlx shadcn@latest add button`)
+- [ ] Tailwind CSS v4 (CSS-first 설정 방식)
+- [ ] 다크모드 (`next-themes`)
 
 ### 7단계 — 성능 & 배포
-- `next/image` 이미지 최적화
-- `next/font` 폰트 최적화
-- Metadata API (SEO)
-- Vercel 배포 + 환경변수 설정
+- [ ] `next/image` 이미지 최적화
+- [ ] `next/font` 폰트 최적화
+- [ ] Metadata API (SEO)
+- [ ] Vercel 배포 + 환경변수 설정
 
 ---
 
