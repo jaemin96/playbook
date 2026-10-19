@@ -45,8 +45,17 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
+  packages/biome-config:
+    dependencies:
+      '@biomejs/biome':
+        specifier: '>=2.0.0'
+        version: 2.5.15
+
   packages/logger:
     devDependencies:
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@types/react':
         specifier: 'catalog:'
         version: 19.3.0
@@ -62,6 +71,8 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 3.2.7(@types/node@24.19.2)(jsdom@26.1.0)
+
+  packages/tsconfig: {}
 
 packages:
 
