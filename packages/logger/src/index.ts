@@ -1,6 +1,6 @@
-import { colorFor } from "./core/color.js";
-import { createFlow, type Flow } from "./core/flow.js";
-import { isEnabled } from "./core/namespace.js";
+import { colorFor } from "./core/color";
+import { createFlow, type Flow } from "./core/flow";
+import { isEnabled } from "./core/namespace";
 
 // Vite injects import.meta.env.PROD at build time; fall back to false in test/SSR
 const isProd: boolean =

@@ -1,2 +1,2 @@
-export { LogBoundary } from "./LogBoundary.js";
-export { useRenderLogger } from "./useRenderLogger.js";
+export { LogBoundary } from "./LogBoundary";
+export { useRenderLogger } from "./useRenderLogger";

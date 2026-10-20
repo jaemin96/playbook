@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { createLogger } from "./index.js";
+import { createLogger } from "./index";
 
 function setDebug(value: string) {
   vi.stubGlobal("localStorage", {

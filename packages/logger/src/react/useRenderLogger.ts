@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { createLogger, type Logger } from "../index.js";
+import { createLogger, type Logger } from "../index";
 
 /**
  * 컴포넌트 렌더링을 추적한다.
