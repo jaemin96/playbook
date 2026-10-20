@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { colorFor } from "./color.js";
+import { colorFor } from "./color";
 
 describe("colorFor", () => {
   it("returns a hex color string", () => {

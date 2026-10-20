@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import { createLogger } from "../index.js";
+import { createLogger } from "../index";
 
 interface Props {
   name: string;

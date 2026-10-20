@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { isEnabled } from "./namespace.js";
+import { isEnabled } from "./namespace";
 
 describe("isEnabled", () => {
   function setDebug(value: string | null) {

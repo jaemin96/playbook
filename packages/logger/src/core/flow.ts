@@ -1,4 +1,4 @@
-import { colorFor } from "./color.js";
+import { colorFor } from "./color";
 
 export interface FlowStep {
   label: string;

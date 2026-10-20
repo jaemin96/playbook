@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createFlow } from "./flow.js";
+import { createFlow } from "./flow";
 
 describe("createFlow", () => {
   beforeEach(() => {
