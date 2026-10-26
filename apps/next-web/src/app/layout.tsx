@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Footer, Header } from "@/components/layout";
+import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "web",
@@ -7,11 +8,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  console.log("Server component");
+
   return (
     <html lang="ko">
       <body>
         <Header />
-        {children}
+        <Providers>{children}</Providers>
         <Footer />
       </body>
     </html>
