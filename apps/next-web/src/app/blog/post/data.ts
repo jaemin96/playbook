@@ -1,3 +1,5 @@
+import "server-only";
+
 export type Post = { slug: string; title: string; content: string };
 
 export const POSTS: Post[] = [
