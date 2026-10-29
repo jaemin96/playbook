@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@repo/logger": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "tailwindcss": "catalog:"
   },
   "devDependencies": {
     "@repo/tsconfig": "workspace:*",
