@@ -22,7 +22,9 @@ export class LogBoundary extends Component<Props, State> {
 
   state: State = { hasError: false };
 
-  static getDerivedStateFromError(): State {
+  static getDerivedStateFromError(error: Error): State {
+    // Next.js HTTP 에러(404 등)는 LogBoundary가 처리하지 않고 다시 던진다
+    if (error.message.startsWith("NEXT_HTTP_ERROR_FALLBACK")) throw error;
     return { hasError: true };
   }
 
