@@ -1,4 +1,5 @@
+import Aside from "./Aside";
 import Footer from "./Footer";
 import Header from "./Header";
 
-export { Footer, Header };
+export { Aside, Footer, Header };
