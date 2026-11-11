@@ -1,23 +1,25 @@
-const getData = async (id: string | number) => {
-  if (!id) throw Error("Please, Check pressed ID");
+import UserProfile from "@/components/common/UserProfile";
 
+const getPost = async (id: string | number) => {
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
   if (!res.ok) throw Error(`HTTP error: ${res.status}`);
+  return res.json();
+};
 
-  const data = await res.json();
-
-  if (!data) throw Error("No data");
-
-  return data;
+const getUser = async (id: string | number) => {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+  if (!res.ok) throw Error(`HTTP error: ${res.status}`);
+  return res.json();
 };
 
 export default async function Page() {
-  const data = await getData(1);
+  const [post, user] = await Promise.all([getPost(1), getUser(1)]);
 
   return (
     <>
       <h2>Hello, Dashboard</h2>
-      <div>{data.title}</div>
+      <div>{post.title}</div>
+      <UserProfile user={user} />
     </>
   );
 }
